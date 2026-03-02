@@ -4,319 +4,369 @@
 
     <div id="main-wrapper">
         <div class="site-wrapper-reveal">
-            <!--============ OMACTUO Hero Slider Start ============-->
-            <div class="om-hero-slider-area">
-                <style>
-                    .om-hero-slider-area {
-                        background: #fdfdfd;
-                        padding: 40px 0 60px;
-                        overflow: hidden;
-                        position: relative;
-                    }
 
-                    .om-3d-slider {
-                        width: 100%;
-                        height: 620px;
-                        padding: 30px 0 60px;
-                        /* Force visible overflow for side slides */
-                        overflow: visible !important;
-                    }
+        
+                   <!--============ OMACTUO Hero Slider Start ============-->
 
-                    .om-3d-slide {
-                        width: 50% !important; /* Essential for 20-5-50-5-20 layout */
-                        height: 100%;
-                        border-radius: 40px;
-                        overflow: hidden;
-                        position: relative;
-                        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-                        transition: all 0.8s cubic-bezier(0.25, 1, 0.22, 1);
-                        cursor: pointer;
-                        user-select: none;
-                    }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+    /* --- HIDE ALL LEGACY HERO ELEMENTS --- */
+    .infotechno-hero-area, .infotechno-hero-inner-images, .infotechno-hero-text, 
+    .hero-main-slider, .infotechno-bg, #hero-main-slider {
+        display: none !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
 
-                    .om-slide-img-wrap {
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 40px;
-                        overflow: hidden;
-                        position: relative;
-                    }
+    /* --- OMACTUO PREMIUM 3D SLIDER --- */
+    .om-hero-slider-area {
+        background: #fdfdfd;
+        padding: 40px 0 80px;
+        overflow: hidden;
+        position: relative;
+    }
 
-                    .om-slide-img-wrap::after {
-                        content: '';
-                        position: absolute;
-                        top: 0; left: 0; width: 100%; height: 100%;
-                        background: linear-gradient(to bottom, transparent 40%, rgba(11, 11, 69, 0.8) 100%);
-                        opacity: 0.8;
-                        transition: opacity 0.5s ease;
-                    }
+    .om-3d-slider {
+        width: 100%;
+        height: 580px;
+        perspective: 1500px;
+        perspective-origin: center;
+        overflow: visible !important;
+    }
 
-                    .om-3d-slide img {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        transition: transform 1.5s ease;
-                    }
+    #om_v4_hero .swiper-wrapper {
+        transform-style: preserve-3d;
+        display: flex;
+        transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
 
-                    /* Side slides styling */
-                    .om-3d-slide:not(.swiper-slide-active) {
-                        transform: scale(0.88);
-                        filter: brightness(0.7) blur(1px);
-                        opacity: 0.85;
-                    }
+    /* Math: Center(50%) + Gaps(5%x2) + Sides(20%x2) = 100% */
+    .om-3d-slide {
+        width: 50% !important; 
+        height: 100%;
+        border-radius: 40px;
+        transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+        overflow: hidden;
+        /* No card-style background or shadow */
+        transform-origin: center;
+    }
 
-                    .om-3d-slide.swiper-slide-active {
-                        transform: scale(1);
-                        filter: brightness(1) blur(0);
-                        opacity: 1;
-                        box-shadow: 0 40px 80px rgba(11, 11, 69, 0.22);
-                        z-index: 10;
-                    }
+    .om-3d-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 1.5s ease;
+    }
 
-                    .om-3d-slide.swiper-slide-active img {
-                        transform: scale(1.05);
-                    }
+    /* Side Slides: Pronounced 3D */
+    .om-3d-slide.swiper-slide-prev {
+        transform: rotateY(40deg) scale(0.85);
+        filter: brightness(0.6) blur(2px);
+        opacity: 0.8;
+        z-index: 5;
+    }
 
-                    /* Content Overlay */
-                    .om-slide-content {
-                        position: absolute;
-                        bottom: 0;
-                        left: 0;
-                        width: 100%;
-                        padding: 60px 50px;
-                        color: #fff;
-                        z-index: 2;
-                        opacity: 0;
-                        transform: translateY(40px);
-                        transition: all 0.7s cubic-bezier(0.25, 1, 0.22, 1) 0.3s;
-                    }
+    .om-3d-slide.swiper-slide-next {
+        transform: rotateY(-40deg) scale(0.85);
+        filter: brightness(0.6) blur(2px);
+        opacity: 0.8;
+        z-index: 5;
+    }
 
-                    .swiper-slide-active .om-slide-content {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
+    /* Active Slide: Focus */
+    .om-3d-slide.swiper-slide-active {
+        transform: rotateY(0deg) scale(1); /* Locked scale for perfect centering */
+        filter: brightness(1) blur(0);
+        opacity: 1;
+        z-index: 10;
+    }
 
-                    .om-headline {
-                        font-size: clamp(28px, 4.5vw, 52px);
-                        font-weight: 900;
-                        color: #fff;
-                        margin-bottom: 12px;
-                        line-height: 1.05;
-                        letter-spacing: -1px;
-                        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-                    }
+    .om-3d-slide.swiper-slide-active img {
+        transform: scale(1.1);
+    }
 
-                    .om-subheadline {
-                        font-size: clamp(15px, 1.6vw, 20px);
-                        color: rgba(255, 255, 255, 0.9);
-                        margin-bottom: 30px;
-                        max-width: 85%;
-                        line-height: 1.5;
-                        text-shadow: 0 1px 5px rgba(0,0,0,0.2);
-                    }
+    /* Content Overlay */
+    .om-slide-content {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(11, 11, 69, 0.9) 0%, rgba(11, 11, 69, 0.3) 50%, transparent 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 60px 50px;
+        color: white;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 0.7s ease 0.4s;
+    }
 
-                    .om-cta-group {
-                        display: flex;
-                        gap: 15px;
-                        align-items: center;
-                    }
+    .swiper-slide-active .om-slide-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-                    .om-hero-btn {
-                        padding: 14px 34px;
-                        background: #FF5F1F;
-                        color: #fff !important;
-                        border-radius: 8px;
-                        font-weight: 800;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                        font-size: 14px;
-                        box-shadow: 0 8px 25px rgba(255, 95, 31, 0.3);
-                        transition: all 0.3s cubic-bezier(0.25, 1, 0.22, 1);
-                    }
+    .om-headline {
+        font-size: clamp(26px, 4vw, 48px);
+        font-weight: 900;
+        margin-bottom: 20px;
+        line-height: 1.1;
+    }
 
-                    .om-hero-btn:hover {
-                        background: #fff;
-                        color: #FF5F1F !important;
-                        transform: translateY(-3px);
-                        box-shadow: 0 12px 30px rgba(255, 95, 31, 0.4);
-                    }
+    .om-btn {
+        background: #FF5F1F;
+        color: #fff !important;
+        padding: 15px 35px;
+        border-radius: 8px;
+        font-weight: 800;
+        text-transform: uppercase;
+        width: fit-content;
+        box-shadow: 0 10px 20px rgba(255, 95, 31, 0.4);
+        transition: 0.3s;
+    }
 
-                    /* Navigation & Pagination */
-                    .om-slider-controls {
-                        position: absolute;
-                        bottom: 20px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        z-index: 20;
-                        display: flex;
-                        align-items: center;
-                        gap: 40px;
-                    }
+    .om-btn:hover { background: #fff; color: #FF5F1F !important; transform: translateY(-3px); }
 
-                    .om-swiper-nav {
-                        width: 50px;
-                        height: 50px;
-                        border: 2px solid rgba(11, 11, 69, 0.1);
-                        border-radius: 50%;
-                        display: flex !important;
-                        align-items: center;
-                        justify-content: center;
-                        background: rgba(255,255,255,0.9);
-                        backdrop-filter: blur(5px);
-                        transition: all 0.3s ease;
-                        cursor: pointer;
-                        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-                    }
+    /* Nav UI */
+    .hero-nav-btn {
+        width: 55px; height: 55px;
+        background: #FF5F1F !important;
+        border-radius: 50%;
+        color: #fff !important;
+        z-index: 20;
+    }
+    .hero-nav-btn::after { content: none; }
+    .hero-nav-btn i { font-size: 20px; }
 
-                    .om-swiper-nav:hover {
-                        background: #FF5F1F;
-                        border-color: #FF5F1F;
-                        color: #fff !important;
-                        transform: scale(1.1);
-                    }
+    /* Mobile Adaptions */
+    @media (max-width: 767px) {
+        .om-hero-slider-area { padding: 5px 0 15px !important; }
+        .om-3d-slider { 
+            height: 150px !important; /* Extremely compact height for full wide view */
+            overflow: visible !important; 
+            perspective: 1500px !important;
+        }
+        .om-3d-slide { 
+            width: 50% !important; 
+            border-radius: 6px !important; 
+        }
 
-                    .om-swiper-nav::after {
-                        font-size: 16px;
-                        font-weight: 900;
-                    }
+        /* Show full image without cropping */
+        .om-3d-slide img {
+            object-fit: fill !important; /* Squeezes whole image into the box */
+        }
 
-                    .om-swiper-prev { left: -80px !important; }
-                    .om-swiper-next { right: -80px !important; }
+        /* Side Slides on Mobile: Pronounced 3D */
+        .om-3d-slide.swiper-slide-prev {
+            transform: rotateY(35deg) scale(0.8) !important;
+            filter: brightness(0.6) !important;
+        }
+        .om-3d-slide.swiper-slide-next {
+            transform: rotateY(-35deg) scale(0.8) !important;
+            filter: brightness(0.6) !important;
+        }
+        .om-3d-slide.swiper-slide-active {
+            transform: rotateY(0deg) scale(1) !important;
+            filter: brightness(1) !important;
+            /* Removed card shadow on mobile */
+        }
 
-                    .om-3d-slider .swiper-pagination-bullets {
-                        bottom: 30px !important;
-                    }
+        .om-slide-content { 
+            padding: 10px !important; 
+            display: flex !important;
+            justify-content: flex-end !important;
+        }
+        .om-headline { font-size: 11px !important; margin-bottom: 5px !important; }
+        .om-btn { 
+            display: inline-block !important;
+            padding: 4px 10px !important; 
+            font-size: 9px !important; 
+            border-radius: 4px !important;
+        } 
+        /* Properly within media query */
+        .hero-nav-btn { 
+            visibility: hidden !important; 
+            opacity: 0.1 !important; 
+            pointer-events: auto !important;
+            display: flex !important;
+            width: 1px !important; height: 1px !important; overflow: hidden !important;
+        }
+    }
+/* --- OMACTUO PREMIUM 3D SLIDER --- */
+.om-hero-slider-area {
+    background: #fdfdfd;
+    padding: 40px 0 80px;
+    overflow: hidden;
+    position: relative;
+}
 
-                    .om-3d-slider .swiper-pagination-bullet {
-                        width: 12px;
-                        height: 4px;
-                        border-radius: 2px;
-                        background: #0B0B45;
-                        opacity: 0.2;
-                        transition: all 0.3s ease;
-                    }
+.om-3d-slider {
+    width: 100%;
+    height: 580px;
+    perspective: 1200px; /* Adjusted perspective for better depth */
+    overflow: visible !important;
+}
 
-                    .om-3d-slider .swiper-pagination-bullet-active {
-                        width: 30px;
-                        background: #FF5F1F;
-                        opacity: 1;
-                    }
+/* Force the wrapper to allow slides to sit side-by-side correctly */
+#om_v4_hero .swiper-wrapper {
+    transform-style: preserve-3d;
+    display: flex;
+}
 
-                    /* Mobile Optimization */
-                    @media (max-width: 991px) {
-                        .om-3d-slider { height: 500px; padding-top: 20px; }
-                        .om-3d-slide { width: 75% !important; border-radius: 30px; }
-                        .om-slide-img-wrap { border-radius: 30px; }
-                        .om-headline { font-size: 32px; }
-                        .om-slide-content { padding: 40px 30px; }
-                    }
+.om-3d-slide {
+    width: 50% !important; /* The Active slide will be 50% */
+    height: 100%;
+    border-radius: 40px;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s, opacity 0.8s;
+    position: relative;
+    overflow: hidden;
+}
 
-                    @media (max-width: 575px) {
-                        .om-3d-slider { height: 450px; }
-                        .om-3d-slide { width: 88% !important; border-radius: 24px; }
-                        .om-slide-img-wrap { border-radius: 24px; }
-                        .om-headline { font-size: 26px; }
-                        .om-subheadline { font-size: 14px; margin-bottom: 20px; }
-                        .om-hero-btn { padding: 12px 24px; font-size: 13px; }
-                    }
-                </style>
+/* Side Slides: Forced to 20% visual appearance via Scale */
+/* Math: 0.4 of 50% = 20% of total width */
+.om-3d-slide.swiper-slide-prev {
+    transform: translateX(10%) rotateY(35deg) scale(0.6) !important; 
+    filter: brightness(0.6) blur(2px);
+    opacity: 0.7;
+    z-index: 5;
+}
 
-                <div class="swiper om-3d-slider">
-                    <div class="swiper-wrapper">
-                        <?php 
-                        $slider_query = mysqli_query($con, "SELECT * FROM sliders WHERE status = 'active' ORDER BY id DESC");
-                        if (mysqli_num_rows($slider_query) > 0):
-                            while($s = mysqli_fetch_assoc($slider_query)):
-                        ?>
-                        <div class="swiper-slide om-3d-slide">
-                            <div class="om-slide-img-wrap">
-                                <img src="<?php echo $s['image']; ?>" alt="<?php echo htmlspecialchars($s['headline']); ?>">
-                            </div>
-                            <div class="om-slide-content">
-                                <?php if(!empty($s['credibility_line'])): ?>
-                                    <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #FF5F1F; margin-bottom: 15px; display: block;"><?php echo htmlspecialchars($s['credibility_line']); ?></span>
-                                <?php endif; ?>
-                                <h2 class="om-headline"><?php echo htmlspecialchars($s['headline']); ?></h2>
-                                <p class="om-subheadline"><?php echo htmlspecialchars($s['sub_headline']); ?></p>
-                                <div class="om-cta-group">
-                                    <a href="<?php echo htmlspecialchars($s['button_link']); ?>" class="om-hero-btn">
-                                        Learn More <i class="fas fa-arrow-right ms-2"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <?php 
-                            endwhile;
-                        else:
-                            // Fallback items if database is empty
-                        ?>
-                            <div class="swiper-slide om-3d-slide">
-                                <div class="om-slide-img-wrap">
-                                    <img src="assets/images/hero/hero-01.webp" alt="Industrial Automation">
-                                </div>
-                                <div class="om-slide-content">
-                                    <h2 class="om-headline">Pioneering Industrial <br>Automation Solutions</h2>
-                                    <p class="om-subheadline">Revolutionizing manufacturing with precision robotics and tailored mechatronic systems for the modern factory.</p>
-                                    <a href="products.php" class="om-hero-btn">Explore Products</a>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    
-                    <!-- Navigation Buttons -->
-                    <div class="swiper-button-next om-swiper-nav om-swiper-next"></div>
-                    <div class="swiper-button-prev om-swiper-nav om-swiper-prev"></div>
-                    
-                    <!-- Pagination -->
-                    <div class="swiper-pagination om-swiper-pagination"></div>
+.om-3d-slide.swiper-slide-next {
+    transform: translateX(-10%) rotateY(-35deg) scale(0.6) !important;
+    filter: brightness(0.6) blur(2px);
+    opacity: 0.7;
+    z-index: 5;
+}
+
+/* Active Slide: Focus (The 50% block) */
+.om-3d-slide.swiper-slide-active {
+    transform: rotateY(0deg) scale(1) !important;
+    filter: brightness(1) blur(0);
+    opacity: 1;
+    z-index: 10;
+}
+
+/* Hide slides further out to keep the 3-slide focus */
+.om-3d-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) {
+    opacity: 0;
+    visibility: hidden;
+}
+</style>
+
+<section class="om-hero-slider-area">
+    <div class="swiper om-3d-slider" id="om_v4_hero">
+        <div class="swiper-wrapper">
+            <?php 
+            $res = mysqli_query($con, "SELECT * FROM sliders WHERE status = 'active' ORDER BY id DESC");
+            if($res && mysqli_num_rows($res) > 0):
+                $rows = [];
+                while($row = mysqli_fetch_assoc($res)) { $rows[] = $row; }
+                
+                // Triple exactly for a robust 3-slide visible system (3x3 = 9 slides)
+                $final_rows = array_merge($rows, $rows, $rows); 
+                
+                foreach($final_rows as $s): 
+            ?>
+            <div class="swiper-slide om-3d-slide">
+                <img src="<?php echo $s['image']; ?>" alt="Slide" onerror="this.src='assets/images/hero/hero-01.webp'">
+                <div class="om-slide-content">
+                    <h2 class="om-headline"><?php echo htmlspecialchars($s['headline']); ?></h2>
+                    <a href="<?php echo $s['button_link']; ?>" class="om-btn">View Details</a>
                 </div>
             </div>
+            <?php endforeach; else: ?>
+            <div class="swiper-slide om-3d-slide">
+                <img src="assets/images/hero/hero-01.webp" alt="Default">
+                <div class="om-slide-content">
+                    <h2 class="om-headline">Advanced Industrial Solutions</h2>
+                    <a href="products.php" class="om-btn">Explore Now</a>
+                </div>
+            </div>
+            <?php endif; ?>
+        </div>
 
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    function initOmSlider() {
-                        if (typeof Swiper !== 'undefined') {
-                            const gapPct = 0.05; // 5% gap
-                            const containerWidth = document.querySelector('.om-3d-slider').offsetWidth;
-                            const gapPx = containerWidth * gapPct;
+        <div class="swiper-button-prev hero-nav-btn"><i class="fas fa-chevron-left"></i></div>
+        <div class="swiper-button-next hero-nav-btn"><i class="fas fa-chevron-right"></i></div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
 
-                            new Swiper('.om-3d-slider', {
-                                slidesPerView: 'auto',
-                                centeredSlides: true,
-                                spaceBetween: gapPx,
-                                loop: true,
-                                speed: 900,
-                                watchSlidesProgress: true,
-                                autoplay: {
-                                    delay: 5000,
-                                    disableOnInteraction: false,
-                                },
-                                navigation: {
-                                    nextEl: '.om-swiper-next',
-                                    prevEl: '.om-swiper-prev',
-                                },
-                                pagination: {
-                                    el: '.om-swiper-pagination',
-                                    clickable: true,
-                                },
-                                keyboard: {
-                                    enabled: true,
-                                },
-                                on: {
-                                    resize: function() {
-                                        this.params.spaceBetween = this.el.offsetWidth * gapPct;
-                                        this.update();
-                                    }
-                                }
-                            });
-                        } else {
-                            // If Swiper isn't loaded yet, wait a bit
-                            setTimeout(initOmSlider, 100);
-                        }
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    (function() {
+        if (window.OM_HERO_LOADED) return;
+        window.OM_HERO_LOADED = true;
+
+        // Capture V11 immediately before legacy scripts overwrite it
+        var SwiperV11 = window.Swiper;
+
+        function start_om_hero() {
+            var el = document.getElementById('om_v4_hero');
+            if (!el || typeof SwiperV11 === 'undefined') {
+                setTimeout(start_om_hero, 250);
+                return;
+            }
+
+            // Cleanup any ghost instances
+            if (el.swiper) el.swiper.destroy(true, true);
+
+            window.om_instance_v11 = new SwiperV11('#om_v4_hero', {
+                slidesPerView: 'auto',
+                centeredSlides: true,
+                loop: true,
+                loopedSlides: 6, 
+                loopAdditionalSlides: 2,
+                watchSlidesProgress: true,
+                grabCursor: true,
+                speed: 1000,
+                spaceBetween: el.clientWidth * 0.05,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false
+                },
+                navigation: { 
+                    nextEl: '#om_v4_hero .swiper-button-next', 
+                    prevEl: '#om_v4_hero .swiper-button-prev' 
+                },
+                pagination: { 
+                    el: '#om_v4_hero .swiper-pagination', 
+                    clickable: true 
+                },
+                on: {
+                    init: function() {
+                        var sw = this;
+                        setTimeout(function() { sw.update(); }, 200);
+                    },
+                    slideChangeTransitionEnd: function() {
+                        this.update(); // Re-center strictly after every scroll
+                    },
+                    resize: function() {
+                        this.params.spaceBetween = this.el.clientWidth * 0.05;
+                        this.update();
                     }
-                    initOmSlider();
-                });
-            </script>
+                }
+            });
+
+            // Prevent double-jumps by checking animation state
+            setInterval(function() {
+                var inst = window.om_instance_v11;
+                if (!inst || inst.animating || !inst.initialized) return; 
+                
+                var n = document.querySelector('#om_v4_hero .swiper-button-next');
+                if (n) n.click();
+            }, 4000);
+
+            console.log("3D Slider & Isolated Auto-Scroll Active");
+        }
+
+        if (document.readyState === 'complete') start_om_hero();
+        else window.addEventListener('load', start_om_hero);
+    })();
+</script>
+            
             <!--============ OMACTUO Hero Slider End ============-->
 
          <!--===========  feature-large-images-wrapper  Start =============-->

@@ -193,7 +193,7 @@ $active_title = 'OMACTUO - Robotics & Automation';
  <style>
     /* Desktop */
 .logo-img {
-    height: 52px;
+    height: 48px;
     width: auto;
 }
 
